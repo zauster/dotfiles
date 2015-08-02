@@ -1,0 +1,35 @@
+sw_volume: 82
+audio_device_state:1:pulse audio
+state: pause
+current: 0
+time: 144.462000
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Indie/Jose Gonzalez/In Our Nature/01-jose_gonzalez-how_low.mp3
+1:Indie/Jose Gonzalez/In Our Nature/02-jose_gonzalez-down_the_line.mp3
+2:Indie/Jose Gonzalez/In Our Nature/03-jose_gonzalez-killing_for_love.mp3
+3:Indie/Jose Gonzalez/In Our Nature/04-jose_gonzalez-in_our_nature.mp3
+4:Indie/Jose Gonzalez/In Our Nature/05-jose_gonzalez-teardrop.mp3
+5:Indie/Jose Gonzalez/In Our Nature/06-jose_gonzalez-abram.mp3
+6:Indie/Jose Gonzalez/In Our Nature/07-jose_gonzalez-time_to_send_someone_away.mp3
+7:Indie/Jose Gonzalez/In Our Nature/08-jose_gonzalez-the_nest.mp3
+8:Indie/Jose Gonzalez/In Our Nature/09-jose_gonzalez-fold.mp3
+9:Indie/Jose Gonzalez/In Our Nature/10-jose_gonzalez-cycling_trivialities.mp3
+10:Indie/Jose Gonzalez/Veneer/01-jose_gonzalez-slow_moves-cta.mp3
+11:Indie/Jose Gonzalez/Veneer/02-jose_gonzalez-remain-cta.mp3
+12:Indie/Jose Gonzalez/Veneer/03-jose_gonzalez-lovestain-cta.mp3
+13:Indie/Jose Gonzalez/Veneer/04-jose_gonzalez-heartbeats-cta.mp3
+14:Indie/Jose Gonzalez/Veneer/05-jose_gonzalez-crosses-cta.mp3
+15:Indie/Jose Gonzalez/Veneer/06-jose_gonzalez-deadweight_on_velveteen-cta.mp3
+16:Indie/Jose Gonzalez/Veneer/07-jose_gonzalez-all_you_deliver-cta.mp3
+17:Indie/Jose Gonzalez/Veneer/08-jose_gonzalez-stay_in_the_shade-cta.mp3
+18:Indie/Jose Gonzalez/Veneer/09-jose_gonzalez-hints-cta.mp3
+19:Indie/Jose Gonzalez/Veneer/10-jose_gonzalez-save_your_day-cta.mp3
+20:Indie/Jose Gonzalez/Veneer/11-jose_gonzalez-broken_arrows-cta.mp3
+playlist_end

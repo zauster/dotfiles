@@ -1,0 +1,3 @@
+killall autocutsel
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &

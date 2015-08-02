@@ -1,0 +1,10 @@
+state=`acpi | awk '{print $3}' | cut -d"," -f1`
+level=`acpi | awk '{print $4}' | cut -d"%" -f1`
+time=`acpi | awk '{print $5}'`
+
+echo $state > /tmp/bat_state
+echo $level > /tmp/bat_level
+
+echo Level: $level"%"
+echo Sate: $state
+echo Time: $time

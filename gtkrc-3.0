@@ -1,0 +1,12 @@
+gtk-icon-theme-name = Faenza
+gtk-theme-name = Zukitwo
+gtk-font-name = Inconsolata 10 
+
+# DejaVu Sans 10
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+include "/usr/share/themes/Zukitwo/gtk-3.0/gtkrc"
+
+include "/home/reitero/.gtkrc.mine"
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT

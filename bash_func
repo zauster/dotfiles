@@ -1,0 +1,116 @@
+
+###
+### Custom bash functions
+###
+
+## extract files
+ex () {
+        if [ -f $1 ] ; then
+                case $1 in
+                        *.tar.bz2)     tar xjfv $1                ;;
+                        *.tar.gz)      tar xzfv $1                ;;
+                        *.bz2)         bunzip2 $1                ;;
+                        *.rar)         rar x $1                  ;;
+                        *.gz)          gunzip $1                 ;;
+                        *.tar)         tar xfv $1                 ;;
+                        *.tbz2)        tar xjfv $1                ;;
+                        *.tgz)         tar xzfv $1                ;;
+                        *.zip)         7z x $1                  ;;
+                        *.Z)           uncompress $1             ;;
+                        *)             echo "'$1' cannot be extracted via extract()" ;;
+                esac
+        else
+                echo "'$1' is not a valid file"
+        fi
+}
+
+## aurbuild
+aurbuild() {
+    cd ~/aur
+    packagename=$1
+    wget http://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || 
+return 1
+    echo "Got package..."
+    ex $1.tar.gz || return 1
+    rm $1.tar.gz || return 1
+    cd $1
+    makepkg || return 1    
+}
+
+# edit file with root privs
+function E() {
+         emacsclient -c -a emacs "/sudo:root@localhost:$1"
+}  
+
+xxnpExact () {
+    R --vanilla CMD build npExact
+    R --vanilla CMD check npExact_0.2.tar.gz
+    rm npExact.pdf
+    R --vanilla CMD Rd2pdf npExact
+}
+
+xxgenBinom () {
+    R --vanilla CMD build genBinomTest
+    R --vanilla CMD check genBinomTest_0.1.tar.gz
+    rm genBinomTest.pdf
+    R --vanilla CMD Rd2pdf genBinomTest
+}
+
+xxelm () {
+      R --vanilla CMD build elm
+      R --vanilla CMD check elm_0.1.tar.gz
+      rm elm.pdf
+      R --vanilla CMD Rd2pdf elm
+}
+
+connectWIIW () {
+        cd /home/reitero/Downloads/reiter-vpn/
+        sudo openvpn --config reiter.ovpn
+}
+
+mountProjects () {
+        sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
+        }
+
+mountRawData () {
+        sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
+        }
+
+mountPUBLIC () {
+        sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
+        }
+
+mountWIIWFolders () {
+        sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
+        sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
+        sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
+        }
+
+unmountWIIWFolders () {
+        sudo umount /home/reitero/Arbeit/wiiw/Projects
+        sudo umount /home/reitero/Arbeit/wiiw/RawData
+        sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
+        }
+
+compcpp() {
+          g++ -o $1 -std=c++11 $1.cpp
+          ./$1
+          }
+
+syncWIOD () {
+          rsync -aP /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/
+          rsync -aP /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/
+        }
+
+resyncWIOD () {
+          rsync -rP /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/
+          rsync -rP /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/
+        }
+
+syncPronto () {
+          rsync -aP /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
+        }
+
+resyncPronto () {
+          rsync -rP /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
+        }
