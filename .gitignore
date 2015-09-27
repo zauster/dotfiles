@@ -1,2 +1,6 @@
 /config/gtk-3.0.zenburn/
 /config/mpd/log
+/config/mpd/pid
+/config/mpd/database
+/config/mpd/state
+/config/gtk-3.0/bookmarks

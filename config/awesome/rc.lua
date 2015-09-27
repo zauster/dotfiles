@@ -63,12 +63,6 @@ local safeCoords = { x = 512, y = 0}
 -- Flag to tell Awesome whether to do this at startup.
 -- local moveMouseOnStartup = true
 
--- Simple function to move the mouse to the coordinates set above.
-local function moveMouse(x_co, y_co)
-    mouse.coords({ x=x_co, y=y_co })
-end
--- }}}
-
 home = os.getenv("HOME")
 confdir = home .. "/dotfiles/.config/awesome"
 themes = confdir .. "/themes"
@@ -140,7 +134,7 @@ end
 -- Define a tag table which hold all screen tags.
 tags = { 
    names  = { " main", " www ", "emacs", "media"},
-   layouts = { layouts[1], layouts[4], layouts[2], layouts[1] }
+   layouts = { layouts[1], layouts[4], layouts[4], layouts[1] }
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -370,13 +364,13 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
-local orglendar = require('orglendar')
-orglendar.files = { "/home/reitero/Dropbox/Org/arbeit.org",
-                    "/home/reitero/Dropbox/Org/else.org",
-                    "/home/reitero/Dropbox/Org/notes.org",
-                    "/home/reitero/Dropbox/Org/studium.org",
-                    "/home/reitero/Dropbox/Org/thesis.org"  }
-orglendar.register(mytextclock)
+-- local orglendar = require('orglendar')
+-- orglendar.files = { "/home/reitero/Dropbox/Org/arbeit.org",
+--                     "/home/reitero/Dropbox/Org/else.org",
+--                     "/home/reitero/Dropbox/Org/notes.org",
+--                     "/home/reitero/Dropbox/Org/studium.org",
+--                     "/home/reitero/Dropbox/Org/thesis.org"  }
+-- orglendar.register(mytextclock)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -709,9 +703,11 @@ clientbuttons = awful.util.table.join(
 -- Custom keybindings
 globalkeys = awful.util.table.join(globalkeys, 
                                    awful.key({ modkey,  }, "#94", function() awful.util.spawn("pcmanfm") end),
+                                   awful.key({  }, "XF86Explorer", function() awful.util.spawn("pcmanfm") end),
+                                   awful.key({ modkey,  }, "i", function () awful.util.spawn("chromium") end),
                                    awful.key({ modkey,  }, "a", function () awful.util.spawn("firefox") end),
-                                   awful.key({ modkey,  }, "e", function () awful.util.spawn("emacsen") end),
                                    awful.key({ modkey,  }, "o", function () awful.util.spawn("thunderbird") end),
+                                   awful.key({ modkey,  }, "e", function () awful.util.spawn("emacsen") end),
                                    awful.key({ modkey,  }, "#52", function () awful.util.spawn("sonata") end),
                                    awful.key({ }, "XF86MonBrightnessDown",       function () awful.util.spawn("xbacklight -dec 7") end),
                                    awful.key({ }, "XF86MonBrightnessUp",         function () awful.util.spawn("xbacklight -inc 7") end),
@@ -741,6 +737,8 @@ awful.rules.rules = {
      properties = { floating = true } },
    -- Set Firefox to always map on tags number 2 of screen 1.
    { rule = { class = "Firefox" },
+     properties = { tag = tags[1][2] } },
+   { rule = { class = "Chromium" },
      properties = { tag = tags[1][2] } },
    { rule = { class = "Transmission" },
      properties = { tag = tags[1][4] } },

@@ -33,8 +33,8 @@ theme.colors.cyan = "#2aa198"
 theme.colors.green = "#859900"
 -- }}}
 
--- theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/wallpaper2.jpg"
-theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/transparent-polygonal-sphere.jpg"
+theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/solarized_ball.png"
+-- theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/transparent-polygonal-sphere.jpg"
 theme.font      = "inconsolata 10" -- sans 8
 
 theme.bg_normal = theme.colors.base3

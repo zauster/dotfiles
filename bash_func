@@ -46,28 +46,46 @@ xxnpExact () {
     R --vanilla CMD build npExact
     R --vanilla CMD check npExact_0.2.tar.gz
     rm npExact.pdf
-    R --vanilla CMD Rd2pdf npExact
+    R --vanilla CMD Rd2pdf npExact &> /dev/null
 }
 
 xxgenBinom () {
     R --vanilla CMD build genBinomTest
     R --vanilla CMD check genBinomTest_0.1.tar.gz
     rm genBinomTest.pdf
-    R --vanilla CMD Rd2pdf genBinomTest
+    R --vanilla CMD Rd2pdf genBinomTest &> /dev/null
 }
 
 xxelm () {
       R --vanilla CMD build elm
       R --vanilla CMD check elm_0.1.tar.gz
       rm elm.pdf
-      R --vanilla CMD Rd2pdf elm
+      R --vanilla CMD Rd2pdf elm &> /dev/null
 }
 
+xxeurostat () {
+      rm eurostat/vignettes/figure/*
+      rmdir eurostat/vignettes/figure
+      R --vanilla CMD build eurostat
+      R --vanilla CMD check eurostat_1*.tar.gz
+}
+
+
+compcpp() {
+          g++ -o $1 -std=c++11 $1.cpp
+          ./$1
+          }
+
+
+##
+## WIIW stuff
+## 
 connectWIIW () {
         cd /home/reitero/Downloads/reiter-vpn/
         sudo openvpn --config reiter.ovpn
 }
 
+## mounting folders
 mountProjects () {
         sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
         }
@@ -92,25 +110,23 @@ unmountWIIWFolders () {
         sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
         }
 
-compcpp() {
-          g++ -o $1 -std=c++11 $1.cpp
-          ./$1
-          }
-
+## Sync WIIW folder from my WIIW PC to my laptop
 syncWIOD () {
-          rsync -aP /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/
-          rsync -aP /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/
-        }
-
-resyncWIOD () {
-          rsync -rP /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/
-          rsync -rP /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/
+          rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/
+          rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/
         }
 
 syncPronto () {
-          rsync -aP /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
+          rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
         }
 
+## Sync folder from my laptop back to the WIIW PC
+resyncWIOD () {
+          rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/
+          rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/
+        }
+
+
 resyncPronto () {
-          rsync -rP /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
+          rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
         }

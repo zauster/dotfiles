@@ -14,7 +14,8 @@ local awful = require("awful")
 theme                               = {}
 
 theme.confdir                       = awful.util.getdir("config") .. "/themes/starbreaker"
-theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/transparent-polygonal-sphere.jpg"
+-- theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/transparent-polygonal-sphere.jpg"
+theme.wallpaper = "/home/reitero/Dotfiles/wallpapers/solarized_ball.png"
 -- theme.wallpaper                     = theme.confdir .. "/wall.jpg"
 
 theme.font      = "inconsolata 10" -- sans 8
