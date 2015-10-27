@@ -5,128 +5,139 @@
 
 ## extract files
 ex () {
-        if [ -f $1 ] ; then
-                case $1 in
-                        *.tar.bz2)     tar xjfv $1                ;;
-                        *.tar.gz)      tar xzfv $1                ;;
-                        *.bz2)         bunzip2 $1                ;;
-                        *.rar)         rar x $1                  ;;
-                        *.gz)          gunzip $1                 ;;
-                        *.tar)         tar xfv $1                 ;;
-                        *.tbz2)        tar xjfv $1                ;;
-                        *.tgz)         tar xzfv $1                ;;
-                        *.zip)         7z x $1                  ;;
-                        *.Z)           uncompress $1             ;;
-                        *)             echo "'$1' cannot be extracted via extract()" ;;
-                esac
-        else
-                echo "'$1' is not a valid file"
-        fi
+if [ -f $1 ] ; then
+case $1 in
+*.tar.bz2)     tar xjfv $1                ;;
+*.tar.gz)      tar xzfv $1                ;;
+*.bz2)         bunzip2 $1                ;;
+*.rar)         rar x $1                  ;;
+*.gz)          gunzip $1                 ;;
+*.tar)         tar xfv $1                 ;;
+*.tbz2)        tar xjfv $1                ;;
+*.tgz)         tar xzfv $1                ;;
+*.zip)         7z x $1                  ;;
+*.Z)           uncompress $1             ;;
+*)             echo "'$1' cannot be extracted via extract()" ;;
+esac
+else
+echo "'$1' is not a valid file"
+fi
 }
 
 ## aurbuild
 aurbuild() {
-    cd ~/aur
-    packagename=$1
-    wget http://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || 
+cd ~/aur
+packagename=$1
+wget http://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || 
 return 1
-    echo "Got package..."
-    ex $1.tar.gz || return 1
-    rm $1.tar.gz || return 1
-    cd $1
-    makepkg || return 1    
+echo "Got package..."
+ex $1.tar.gz || return 1
+rm $1.tar.gz || return 1
+cd $1
+makepkg || return 1    
 }
 
 # edit file with root privs
 function E() {
-         emacsclient -c -a emacs "/sudo:root@localhost:$1"
+emacsclient -c -a emacs "/sudo:root@localhost:$1"
 }  
 
 xxnpExact () {
-    R --vanilla CMD build npExact
-    R --vanilla CMD check npExact_0.2.tar.gz
-    rm npExact.pdf
-    R --vanilla CMD Rd2pdf npExact &> /dev/null
+R --vanilla CMD build npExact
+R --vanilla CMD check npExact_0.2.tar.gz
+rm npExact.pdf
+R --vanilla CMD Rd2pdf npExact &> /dev/null
 }
 
 xxgenBinom () {
-    R --vanilla CMD build genBinomTest
-    R --vanilla CMD check genBinomTest_0.1.tar.gz
-    rm genBinomTest.pdf
-    R --vanilla CMD Rd2pdf genBinomTest &> /dev/null
+R --vanilla CMD build genBinomTest
+R --vanilla CMD check genBinomTest_0.1.tar.gz
+rm genBinomTest.pdf
+R --vanilla CMD Rd2pdf genBinomTest &> /dev/null
 }
 
 xxelm () {
-      R --vanilla CMD build elm
-      R --vanilla CMD check elm_0.1.tar.gz
-      rm elm.pdf
-      R --vanilla CMD Rd2pdf elm &> /dev/null
+R --vanilla CMD build elm
+R --vanilla CMD check elm_0.1.tar.gz
+rm elm.pdf
+R --vanilla CMD Rd2pdf elm &> /dev/null
 }
 
 xxeurostat () {
-      rm eurostat/vignettes/figure/*
-      rmdir eurostat/vignettes/figure
-      R --vanilla CMD build eurostat
-      R --vanilla CMD check eurostat_1*.tar.gz
+rm eurostat/vignettes/figure/*
+rmdir eurostat/vignettes/figure
+R --vanilla CMD build eurostat
+R --vanilla CMD check eurostat_1*.tar.gz
 }
 
 
 compcpp() {
-          g++ -o $1 -std=c++11 $1.cpp
-          ./$1
-          }
+g++ -o $1 -std=c++11 $1.cpp
+./$1
+}
 
 
 ##
 ## WIIW stuff
 ## 
 connectWIIW () {
-        cd /home/reitero/Downloads/reiter-vpn/
-        sudo openvpn --config reiter.ovpn
+cd /home/reitero/Downloads/reiter-vpn/
+sudo openvpn --config reiter.ovpn        
 }
 
 ## mounting folders
 mountProjects () {
-        sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
-        }
+sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
+}
 
 mountRawData () {
-        sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
-        }
+sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
+}
 
 mountPUBLIC () {
-        sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
-        }
+sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
+}
+
+mountW () {
+sudo mount -t cifs //172.16.0.3/W/ /home/reitero/Arbeit/wiiw/W -o username=reiter,file_mode=0777,dir_mode=0777
+}
+
+mountBonnie () {
+sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
+}
 
 mountWIIWFolders () {
-        sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
-        sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
-        sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
-        }
+## sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
+## sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
+## sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
+mountProjects()
+mountRawData()
+mountPUBLIC()
+}
 
 unmountWIIWFolders () {
-        sudo umount /home/reitero/Arbeit/wiiw/Projects
-        sudo umount /home/reitero/Arbeit/wiiw/RawData
-        sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
-        }
+sudo umount /home/reitero/Arbeit/wiiw/Projects
+sudo umount /home/reitero/Arbeit/wiiw/RawData
+sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
+}
 
 ## Sync WIIW folder from my WIIW PC to my laptop
 syncWIOD () {
-          rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/
-          rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/
-        }
+rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/
+rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/WIODv2/ /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/
+}
 
 syncPronto () {
-          rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
-        }
+rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
+}
 
 ## Sync folder from my laptop back to the WIIW PC
 resyncWIOD () {
-          rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_EXEURIOT/ /home/reitero/Arbeit/wiiw/Projects/2015_EXEURIOT/
-          rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/EXEURIOT/ /home/reitero/Arbeit/wiiw/RawData/EXEURIOT/
-        }
+rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/
+rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/ /home/reitero/Arbeit/wiiw/RawData/WIODv2/
+}
 
 
 resyncPronto () {
-          rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
-        }
+rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
+}

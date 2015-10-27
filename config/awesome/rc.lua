@@ -447,64 +447,19 @@ for s = 1, screen.count() do
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
-    -- left_layout:add(arr16)
     left_layout:add(space) 
     left_layout:add(mylayoutbox[s])
-    -- left_layout:add(arr16)
     left_layout:add(space) 
     left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    -- right_layout:add(arr15)
     right_layout:add(space)
-    -- right_layout:add(separator)
 
     if s == 1 then right_layout:add(wibox.widget.systray()) end
 
-    -- right_layout:add(separator)
-
     -- Keymap widget
     right_layout:add(kbdcfg.widget)
-    -- right_layout:add(arr3)
-
-    -- 
-    -- Original layout: Sardina
-    --
-    
-    -- -- Battery widget
-    -- right_layout:add(baticon)
-    -- right_layout:add(batwidget)
-    -- -- right_layout:add(arr7)
-
-    -- -- CPU widget
-    -- right_layout:add(cpuicon)
-    -- right_layout:add(cpuwidget)
-    -- -- right_layout:add(arr8)
-
-    -- -- Memory widget
-    -- right_layout:add(memicon)
-    -- right_layout:add(memwidget)
-    -- -- right_layout:add(arr7)
-
-    -- -- Temp widget
-    -- right_layout:add(tempicon)
-    -- right_layout:add(tempwidget)
-    -- -- right_layout:add(arr8)
-
-    -- -- -- Calendar
-    -- right_layout:add(clock_icon)
-    -- right_layout:add(clockwidget)
-
-    --
-    -- New layout: Starbeaker
-    --
-
-    -- Network widget
-    -- right_layout:add(netdownicon)
-    -- right_layout:add(netdowninfo)
-    -- right_layout:add(netupicon)
-    -- right_layout:add(netupinfo)
 
     -- Memory widget
     right_layout:add(memicon)
@@ -517,14 +472,6 @@ for s = 1, screen.count() do
     -- Volume widget
     right_layout:add(volicon)
     right_layout:add(volumewidget)
-
-    -- FS widget
-    -- right_layout:add(fsicon)
-    -- right_layout:add(fswidget)
-
-    -- Weather widget
-    -- right_layout:add(weathericon)
-    -- right_layout:add(yawn.widget)
 
     -- Temp widget
     right_layout:add(tempicon)
@@ -579,7 +526,6 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift"   }, "n", function () awful.client.swap.byidx(  1)    end),
    awful.key({ modkey, "Shift"   }, "r", function () awful.client.swap.byidx( -1)    end),
    awful.key({ modkey,           }, "b", function () awful.screen.focus_relative( 1) end),
-   -- awful.key({ modkey, "Control" }, "r", function () awful.screen.focus_relative(-1) end),
    awful.key({ modkey,           }, "ö", awful.client.urgent.jumpto),
 
 
@@ -594,8 +540,6 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift" }, "l", function () awful.client.incwfact(-0.05) end),
    awful.key({ modkey, "Shift" }, "h", function () awful.client.incwfact( 0.05) end),
 
-   -- awful.key({ modkey,           }, "l",     function () awful.client.incwfact( 0.05)    end),
-   -- awful.key({ modkey,           }, "h",     function () awful.client.incwfact(-0.05)    end),
    -- awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
    -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
@@ -746,6 +690,8 @@ awful.rules.rules = {
      properties = { tag = tags[1][2] } },
    { rule = { class = "Emacs" },
      properties = { tag = tags[1][3] } },
+   { rule = { class = "Blueman" },
+     properties = { tag = tags[1][4] } },
    { rule = { class = "Sonata" },
      properties = { tag = tags[1][4] } },
    { rule = { class = "Skype" },
@@ -827,22 +773,6 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
--- Calculator
--- val = nil 
--- keybinding({ modkey}, "c", function ()
---       awful.prompt.run({  text = val and tostring(val),
---                           selectall = true,
---                           fg_cursor = "black",bg_cursor="orange",
---                           prompt = "<span color='#00A5AB'>Calc:</span> " }, mypromptbox,
---          function(expr)
---             val = awful.util.eval(expr)
---             naughty.notify({ text = expr .. ' = <span color="white">' .. val .. "</span>",
---                              timeout = 0,
---                              run = function() io.popen("echo ".. val .. " | xsel -i"):close() end, })
---          end,
---          nil, awful.util.getdir("cache") .. "/calc")
--- end):add()
 
 -- {{{ Autostart programs
 function run_once(cmd)
