@@ -560,7 +560,7 @@ clientkeys = awful.util.table.join(
    awful.key({ modkey,           }, "Escape", function (c) c:kill()                         end),
    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-   awful.key({ modkey,           }, "o",      function (c) awful.client.movetoscreen(c,c.screen-1) end),
+   -- awful.key({ modkey,           }, "o",      function (c) awful.client.movetoscreen(c,c.screen-1) end),
    awful.key({ modkey,           }, "s",      function (c) awful.client.movetoscreen(c,c.screen+1) end),
    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
    -- awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
@@ -788,4 +788,5 @@ run_once("dropbox")
 run_once("connman-ui-gtk")
 run_once("connman-notify")
 run_once("blueman-manager")
+run_once("redshift-gtk")
 -- }}}

@@ -14,8 +14,8 @@
 ! URxvt*saveLines:        1000
 ! URxvt*termName:         urxvt
 ! URxvt*title:            urxvt
-! URxvt*font: xft:Inconsolata:pixelsize=14:antialias=true:hinting=true
-! URxvt*boldFont: xft:Inconsolata:bold:pixelsize=14:antialias=true:hinting=true
+! URxvt*font: xft:Inconsolata:pixelsize=16:antialias=true:hinting=true
+! URxvt*boldFont: xft:Inconsolata:bold:pixelsize=16:antialias=true:hinting=true
 
 !---------- Background terminal
 !---------- Colors: Solarized theme
@@ -58,8 +58,8 @@ LURxvt*urlLauncher:            firefox
 LURxvt*saveLines:              1000
 LURxvt*termName:               urxvt
 LURxvt*title:                  urxvt
-LURxvt*font:                   xft:Inconsolata:pixelsize=14:antialias=true:hinting=true
-LURxvt*boldFont:               xft:Inconsolata:bold:pixelsize=14:antialias=true:hinting=true
+LURxvt*font:                   xft:Inconsolata:pixelsize=16:antialias=true:hinting=true
+LURxvt*boldFont:               xft:Inconsolata:bold:pixelsize=16:antialias=true:hinting=true
 LURxvt*fading:                 0
 LURxvt*background:             #fdf6e3
 LURxvt*foreground:             #839496
@@ -86,8 +86,8 @@ DURxvt*urlLauncher:                    firefox
 DURxvt*saveLines:                      1000
 DURxvt*termName:                       urxvt
 DURxvt*title:                          urxvt
-DURxvt*font:                           xft:Inconsolata:pixelsize=14:antialias=true:hinting=true
-DURxvt*boldFont:                       xft:Inconsolata:bold:pixelsize=14:antialias=true:hinting=true
+DURxvt*font:                           xft:Inconsolata:pixelsize=16:antialias=true:hinting=true
+DURxvt*boldFont:                       xft:Inconsolata:bold:pixelsize=16:antialias=true:hinting=true
 DURxvt*fading:                         0
 DURxvt*background:                     #002b36
 DURxvt*foreground:                     #657b83

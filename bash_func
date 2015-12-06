@@ -76,6 +76,14 @@ g++ -o $1 -std=c++11 $1.cpp
 ./$1
 }
 
+comptbb() {
+g++ -o $1 -std=c++11 -ltbb $1.cpp
+}
+
+compcl() {
+g++ -o $1 -std=c++11 -lOpenCL $1.cpp
+}
+
 
 ##
 ## WIIW stuff
@@ -87,11 +95,11 @@ sudo openvpn --config reiter.ovpn
 
 ## mounting folders
 mountProjects () {
-sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
+sudo mount -t cifs //172.16.0.3/W/Reiter/Projects_backup/ /home/reitero/Arbeit/wiiw/backup_Projects -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountRawData () {
-sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
+sudo mount -t cifs //172.16.0.3/W/Reiter/RawData_backup/ /home/reitero/Arbeit/wiiw/backup_RawData -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountPUBLIC () {
@@ -110,14 +118,14 @@ mountWIIWFolders () {
 ## sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
 ## sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
 ## sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
-mountProjects()
-mountRawData()
-mountPUBLIC()
+mountProjects
+mountRawData
+mountPUBLIC
 }
 
 unmountWIIWFolders () {
-sudo umount /home/reitero/Arbeit/wiiw/Projects
-sudo umount /home/reitero/Arbeit/wiiw/RawData
+sudo umount /home/reitero/Arbeit/wiiw/backup_Projects
+sudo umount /home/reitero/Arbeit/wiiw/backup_RawData
 sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
 }
 
