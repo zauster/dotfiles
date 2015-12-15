@@ -93,7 +93,6 @@ cd /home/reitero/Downloads/reiter-vpn/
 sudo openvpn --config reiter.ovpn        
 }
 
-## mounting folders
 mountProjects () {
 sudo mount -t cifs //172.16.0.3/W/Reiter/Projects_backup/ /home/reitero/Arbeit/wiiw/backup_Projects -o username=reiter,file_mode=0777,dir_mode=0777
 }
@@ -110,14 +109,7 @@ mountW () {
 sudo mount -t cifs //172.16.0.3/W/ /home/reitero/Arbeit/wiiw/W -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
-mountBonnie () {
-sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
-}
-
 mountWIIWFolders () {
-## sudo mount -t cifs //172.16.0.3/W/Reiter/Projects/ /home/reitero/Arbeit/wiiw/Projects -o username=reiter,file_mode=0777,dir_mode=0777
-## sudo mount -t cifs //172.16.0.3/W/Reiter/RawData/ /home/reitero/Arbeit/wiiw/RawData -o username=reiter,file_mode=0777,dir_mode=0777
-## sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
 mountProjects
 mountRawData
 mountPUBLIC
@@ -129,23 +121,52 @@ sudo umount /home/reitero/Arbeit/wiiw/backup_RawData
 sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
 }
 
-## Sync WIIW folder from my WIIW PC to my laptop
-syncWIOD () {
-rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/
-rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/WIODv2/ /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/
+
+##
+## UniVie Stuff
+##
+
+## Bonnie
+mountBonnie () {
+sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
 }
 
-syncPronto () {
-rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
+sshBonnie () {
+ssh 'a0603045@bonnie.par.univie.ac.at'
 }
 
-## Sync folder from my laptop back to the WIIW PC
-resyncWIOD () {
-rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/
-rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/ /home/reitero/Arbeit/wiiw/RawData/WIODv2/
+## Cora
+mountCora () {
+sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/cora
+}
+
+sshCora () {
+ssh 'a0603045@cora.par.univie.ac.at'
 }
 
 
-resyncPronto () {
-rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
-}
+
+##
+## not needed anymore
+##
+
+## ## Sync WIIW folder from my WIIW PC to my laptop
+## syncWIOD () {
+## rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/
+## rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/WIODv2/ /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/
+## }
+
+## syncPronto () {
+## rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
+## }
+
+## ## Sync folder from my laptop back to the WIIW PC
+## resyncWIOD () {
+## rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/
+## rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/ /home/reitero/Arbeit/wiiw/RawData/WIODv2/
+## }
+
+
+## resyncPronto () {
+## rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
+## }
