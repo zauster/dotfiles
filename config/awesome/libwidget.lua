@@ -159,17 +159,32 @@ tempwidget = lain.widgets.temp({tempfile = "/sys/class/thermal/thermal_zone1/tem
 })
 
 
+-- -- Battery
+-- baticon = wibox.widget.imagebox(icons.widget_batt)
+-- batwidget = lain.widgets.bat({
+--       timeout = 15,
+--       battery = "BAT0",
+--       notify = "on",
+--       settings = function()
+--          if bat_now.perc == "N/A" then
+--             bat_now.perc = "AC "
+--          else
+--             bat_now.perc = bat_now.perc .. "% "
+--          end
+--          widget:set_text(bat_now.perc)
+--       end
+-- })
+
 -- Battery
-baticon = wibox.widget.imagebox(icons.widget_batt)
+baticon = wibox.widget.imagebox(beautiful.widget_batt)
 batwidget = lain.widgets.bat({
-    settings = function()
-        if bat_now.perc == "N/A" then
-            bat_now.perc = "AC "
-        else
-            bat_now.perc = bat_now.perc .. "% "
-        end
-        widget:set_text(bat_now.perc)
-    end
+      settings = function()
+         perc = bat_now.perc .. "% "
+         if bat_now.ac_status == 1 then
+            perc = perc .. "Plug "
+         end
+         widget:set_text(perc)
+      end
 })
 
 -- ALSA volume

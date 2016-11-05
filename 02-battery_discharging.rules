@@ -1,0 +1,19 @@
+
+#
+# Battery discharging rules
+#
+# SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", RUN+="/usr/bin/touch /home/example/discharging"
+
+## SUBSYSTEM=="power_supply", ATTR{status}=="Charging", RUN+="/usr/bin/touch /home/reitero/charging_withoutATTR"
+## SUBSYSTEM=="power_supply", ATTR{capacity}=="[0-100]", ATTR{status}=="Charging", RUN+="/usr/bin/touch /home/reitero/charging"
+
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="/usr/bin/systemctl hibernate"
+## SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[6-100]", RUN+="/usr/bin/touch /home/reitero/discharging"
+
+# test
+# SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[6-100]", RUN+="/usr/bin/notify-send -i 'Discharging...'"
+# SUBSYSTEM=="power_supply", ACTION=="change", ENV{POWER_SUPPLY_STATUS}=="Charging", OPTIONS+="last_rule", RUN+="/home/reitero/Dotfiles/battery_unplugged.sh 0"
+# SUBSYSTEM=="power_supply", ACTION=="change", ENV{POWER_SUPPLY_STATUS}=="Discharging", OPTIONS+="last_rule", RUN+="/home/reitero/Dotfiles/battery_unplugged.sh 1"
+
+## SUBSYSTEM=="power_supply", ACTION=="change", ATTR{status}=="Charging", OPTIONS+="last_rule", RUN+="/home/reitero/Dotfiles/battery_unplugged.sh 0"
+## SUBSYSTEM=="power_supply", ACTION=="change", ATTR{status}=="Discharging", OPTIONS+="last_rule", RUN+="/home/reitero/Dotfiles/battery_unplugged.sh 1"

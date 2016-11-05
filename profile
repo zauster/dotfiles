@@ -6,4 +6,4 @@ export EDITOR='emacsen -nw'
 export VISUAL='emacsen'
 export BROWSER='firefox'
 export GIT_EDITOR='emacsen -nw'
-PATH="${PATH}:/usr/local/stata13"
+PATH="${PATH}:/usr/local/stata13:/opt/intel/bin"

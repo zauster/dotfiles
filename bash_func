@@ -26,15 +26,16 @@ fi
 
 ## aurbuild
 aurbuild() {
-cd ~/aur
+cd ~/build/sources
 packagename=$1
-wget http://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || 
-return 1
+## wget https://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || return 1
+## https://aur.archlinux.org/cgit/aur.git/snapshot/r-mkl.tar.gz
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz || return 1
 echo "Got package..."
 ex $1.tar.gz || return 1
 rm $1.tar.gz || return 1
 cd $1
-makepkg || return 1    
+makepkg -s || return 1    
 }
 
 # edit file with root privs
@@ -70,20 +71,14 @@ R --vanilla CMD build eurostat
 R --vanilla CMD check eurostat_1*.tar.gz
 }
 
-
-compcpp() {
-g++ -o $1 -std=c++11 $1.cpp
-./$1
+##
+## R benchmarks
+##
+timeR () {
+      R CMD BATCH Rbenchmarks.R $1
+      sed '/^> / d' -i $1
+      sed '/^+ / d' -i $1
 }
-
-comptbb() {
-g++ -o $1 -std=c++11 -ltbb $1.cpp
-}
-
-compcl() {
-g++ -o $1 -std=c++11 -lOpenCL $1.cpp
-}
-
 
 ##
 ## WIIW stuff
@@ -107,6 +102,11 @@ sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLI
 
 mountW () {
 sudo mount -t cifs //172.16.0.3/W/ /home/reitero/Arbeit/wiiw/W -o username=reiter,file_mode=0777,dir_mode=0777
+}
+
+mountP () {
+sudo mount -t cifs //172.16.0.3/P/Reiter/Projects_Backup /home/reitero/Arbeit/wiiw/Projects_Backup -o username=reiter,file_mode=0777,dir_mode=0777
+sudo mount -t cifs //172.16.0.3/P/Reiter/Data_Backup /home/reitero/Arbeit/wiiw/Data_Backup -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountWIIWFolders () {
@@ -137,36 +137,18 @@ ssh 'a0603045@bonnie.par.univie.ac.at'
 
 ## Cora
 mountCora () {
-sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/cora
+sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016S/hpc/cora
 }
 
 sshCora () {
 ssh 'a0603045@cora.par.univie.ac.at'
 }
 
+## Harris
+sshHarris () {
+ssh 'a0603045@harris.cs.univie.ac.at'
+}
 
-
-##
-## not needed anymore
-##
-
-## ## Sync WIIW folder from my WIIW PC to my laptop
-## syncWIOD () {
-## rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/
-## rsync -aP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/RawData/WIODv2/ /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/
-## }
-
-## syncPronto () {
-## rsync -aP --exclude="*.csv"   /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/ /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/
-## }
-
-## ## Sync folder from my laptop back to the WIIW PC
-## resyncWIOD () {
-## rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_Projects/2015_WIODv2/ /home/reitero/Arbeit/wiiw/Projects/2015_WIODv2/
-## rsync -rP --delete-before --exclude-from "/home/reitero/Dotfiles/rsync_excludes" /home/reitero/Arbeit/wiiw/local_RawData/WIODv2/ /home/reitero/Arbeit/wiiw/RawData/WIODv2/
-## }
-
-
-## resyncPronto () {
-## rsync -rP --exclude="*.csv" /home/reitero/Arbeit/wiiw/local_Projects/2015_Pronto/ /home/reitero/Arbeit/wiiw/PUBLIC/2015_Pronto/
-## }
+mountHarris () {
+sshfs a0603045@harris.cs.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016W/nhpa/harris
+}

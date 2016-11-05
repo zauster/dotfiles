@@ -4,3 +4,7 @@
 /config/mpd/database
 /config/mpd/state
 /config/gtk-3.0/bookmarks
+/Rabs
+/battery_unplugged.sh
+config/gtk-2.0.backup/*
+config/gtk-3.0_backup/*

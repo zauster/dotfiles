@@ -44,7 +44,7 @@ end
 
 -- Handle runtime errors after startup
 do
-    local in_error = false
+   local in_error = false
     awesome.connect_signal("debug::error", function (err)
         -- Make sure we don't go into an endless error loop
         if in_error then return end
@@ -477,7 +477,7 @@ for s = 1, screen.count() do
     right_layout:add(tempicon)
     right_layout:add(tempwidget)
 
-    -- Battery widget
+    -- -- Battery widget
     right_layout:add(baticon)
     right_layout:add(batwidget)
 
@@ -651,7 +651,8 @@ globalkeys = awful.util.table.join(globalkeys,
                                    awful.key({ modkey,  }, "i", function () awful.util.spawn("chromium") end),
                                    awful.key({ modkey,  }, "a", function () awful.util.spawn("firefox") end),
                                    awful.key({ modkey,  }, "o", function () awful.util.spawn("thunderbird") end),
-                                   awful.key({ modkey,  }, "e", function () awful.util.spawn("emacsen") end),
+                                   awful.key({ modkey,  }, "e", function () awful.util.spawn("emacs") end),
+                                   -- awful.key({ modkey,  }, "e", function () awful.util.spawn("emacsen") end),
                                    awful.key({ modkey,  }, "#52", function () awful.util.spawn("sonata") end),
                                    awful.key({ }, "XF86MonBrightnessDown",       function () awful.util.spawn("xbacklight -dec 7") end),
                                    awful.key({ }, "XF86MonBrightnessUp",         function () awful.util.spawn("xbacklight -inc 7") end),
@@ -774,15 +775,48 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- {{{ Autostart programs
-function run_once(cmd)
-   findme = cmd
-   firstspace = cmd:find(" ")
-   if firstspace then
-      findme = cmd:sub(0, firstspace-1)
-   end
-   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+-- -- {{{ Autostart programs
+
+require("lfs") 
+-- {{{ Run programm once
+local function processwalker()
+   local function yieldprocess()
+      for dir in lfs.dir("/proc") do
+        -- All directories in /proc containing a number, represent a process
+        if tonumber(dir) ~= nil then
+          local f, err = io.open("/proc/"..dir.."/cmdline")
+          if f then
+            local cmdline = f:read("*all")
+            f:close()
+            if cmdline ~= "" then
+              coroutine.yield(cmdline)
+            end
+          end
+        end
+      end
+    end
+    return coroutine.wrap(yieldprocess)
 end
+
+local function run_once(process, cmd)
+   assert(type(process) == "string")
+   local regex_killer = {
+      ["+"]  = "%+", ["-"] = "%-",
+      ["*"]  = "%*", ["?"]  = "%?" }
+
+   for p in processwalker() do
+      if p:find(process:gsub("[-+?*]", regex_killer)) then
+	 return
+      end
+   end
+   return awful.util.spawn(cmd or process)
+end
+-- }}}
+
+-- Usage Example
+-- Use the second argument, if the programm you wanna start, 
+-- differs from the what you want to search.
+-- run_once("redshift", "nice -n19 redshift -l 51:14 -t 5700:4500")
 
 run_once("dropbox")
 run_once("connman-ui-gtk")
