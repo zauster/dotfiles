@@ -3321,7 +3321,7 @@ TERM=xterm
 # Turn the prompt system off:
 prompt off
 # Customise the prompt yourself:
-PROMPT="┌─[%B%F{red}%?%b][%B%F{BLUE}%n%b@%B%F{blue}%m%b][%B%F{magenta}%~%b]
+PROMPT="┌─[%B%F{red}%?%f%b][%B%F{BLUE}%n%f%b@%B%F{blue}%m%f%b][%B%F{magenta}%~%f%b]
 └──╼ %# "
 
 # # Lines configured by zsh-newuser-install

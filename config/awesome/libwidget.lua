@@ -130,13 +130,13 @@ kbdcfg.widget:buttons(awful.util.table.join(
 clockicon = wibox.widget.imagebox(icons.widget_clock)
 mytextclock = awful.widget.textclock(markup("#7788af", "%a, %d %B ") .. markup("#eee8d5", ">") .. markup("#de5e1e", " %H:%M "))
 
--- Calendar
-lain.widgets.calendar:attach(mytextclock, { 
-    font_size = 10,
-    font = "Inconsolata",
-    fg = bgcolors.mony_base0,
-    bg = bgcolors.mony_base2
-})
+-- -- Calendar
+-- lain.widgets.calendar:attach(mytextclock, { 
+--     font_size = 10,
+--     font = "Inconsolata",
+--     fg = bgcolors.mony_base0,
+--     bg = bgcolors.mony_base2
+-- })
 
 -- -- CPU
 cpuicon_image = wibox.widget.imagebox()

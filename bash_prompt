@@ -41,7 +41,8 @@ set_prompts() {
 
     # Default prompts
     # PS1="${EM_BLACK}<${EM_RED}"'$?'"${EM_BLACK}>${EM_BLACK}<${EM_BLUE}\u${EM_BLACK}@${EM_GREEN}\h ${EM_MAGENTA}\w${EM_BLACK}>${EM_BLUE}\$${DEFAULT} "
-PS1="${DEFAULT}┌─${DEFAULT}[${EM_RED}"'$?'"${DEFAULT}]${DEFAULT}[${EM_BLUE}\u${DEFAULT}]${DEFAULT}[${EM_GREEN}\w${DEFAULT}]\n${DEFAULT}└──╼ ${EM_BLUE}\$${DEFAULT} "
+    
+    PS1="${DEFAULT}┌─${DEFAULT}[${EM_RED}"'$?'"${DEFAULT}]${DEFAULT}[${EM_BLUE}\u${DEFAULT}]${DEFAULT}[${EM_GREEN}\w${DEFAULT}]\n${DEFAULT}└──╼ ${EM_BLUE}\$${DEFAULT} "
 
     PS2="${EM_BLUE}>${DEFAULT} "
     PS3=$PS2

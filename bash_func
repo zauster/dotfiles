@@ -75,9 +75,9 @@ R --vanilla CMD check eurostat_1*.tar.gz
 ## R benchmarks
 ##
 timeR () {
-      R CMD BATCH Rbenchmarks.R $1
-      sed '/^> / d' -i $1
-      sed '/^+ / d' -i $1
+R CMD BATCH Rbenchmarks.R $1
+sed '/^> / d' -i $1
+sed '/^+ / d' -i $1
 }
 
 ##
@@ -85,7 +85,7 @@ timeR () {
 ## 
 connectWIIW () {
 cd /home/reitero/Downloads/reiter-vpn/
-sudo openvpn --config reiter.ovpn        
+sudo openvpn --config reiter.ovpn
 }
 
 mountProjects () {
@@ -119,6 +119,10 @@ unmountWIIWFolders () {
 sudo umount /home/reitero/Arbeit/wiiw/backup_Projects
 sudo umount /home/reitero/Arbeit/wiiw/backup_RawData
 sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
+}
+
+remWIIW () {
+rdesktop -g 96% -P -z -x l -r sound:off -d WIIW -u reiter -p wior_2 172.16.5.1
 }
 
 
