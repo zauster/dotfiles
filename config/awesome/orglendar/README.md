@@ -6,8 +6,7 @@ See more information and installation guide here: http://awesome.naquadah.org/wi
 
 ## Version ##
 
-<<<<<<< HEAD
 This version is intended for the git/master version of Awesome. If you use Awesome v.3.4.X please use this version: https://github.com/alexander-yakushev/Orglendar/tree/awesome-3.4.x .
-=======
+
 This version is intended for the Awesome v.3.4.X. If you use git/master version of Awesome v.3.4.X please use this version: https://github.com/alexander-yakushev/Orglendar/ .
->>>>>>> awesome-3.4.x
+

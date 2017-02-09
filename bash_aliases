@@ -59,8 +59,8 @@ alias pacclean='sudo pacman -Sc'            # Clean the local cache from old pac
 alias pacupd='sudo pacman -Sy && sudo abs'     # Update and refresh the local package and ABS databases against repositories
 alias pacinsd='sudo pacman -S --asdeps'        # Install given package(s) as dependencies of another package
 alias pacmir='sudo pacman -Syy'                # Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
-# alias pacro='sudo pacman -Rs $(pacman -Qtdq)' # Removes unneeded packages
-alias pacro="pacman -Qtdq > /dev/null && sudo pacman -Rns \$(pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
+alias pacro='sudo pacman -Rs $(pacman -Qtdq)' # Removes unneeded packages
+#alias pacro="pacman -Qtdq > /dev/null && sudo pacman -Rns \$(pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')"
 
 alias emacsen='emacsen -nw'
 

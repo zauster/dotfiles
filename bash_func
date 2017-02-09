@@ -5,126 +5,146 @@
 
 ## extract files
 ex () {
-if [ -f $1 ] ; then
-case $1 in
-*.tar.bz2)     tar xjfv $1                ;;
-*.tar.gz)      tar xzfv $1                ;;
-*.bz2)         bunzip2 $1                ;;
-*.rar)         rar x $1                  ;;
-*.gz)          gunzip $1                 ;;
-*.tar)         tar xfv $1                 ;;
-*.tbz2)        tar xjfv $1                ;;
-*.tgz)         tar xzfv $1                ;;
-*.zip)         7z x $1                  ;;
-*.Z)           uncompress $1             ;;
-*)             echo "'$1' cannot be extracted via extract()" ;;
-esac
-else
-echo "'$1' is not a valid file"
-fi
+   if [ -f $1 ] ; then
+     case $1 in
+       *.tar.bz2)     tar xjfv $1                ;;
+       *.tar.gz)      tar xzfv $1                ;;
+       *.bz2)         bunzip2 $1                ;;
+       *.rar)         rar x $1                  ;;
+       *.gz)          gunzip $1                 ;;
+       *.tar)         tar xfv $1                 ;;
+       *.tbz2)        tar xjfv $1                ;;
+       *.tgz)         tar xzfv $1                ;;
+       *.zip)         7z x $1                  ;;
+       *.Z)           uncompress $1             ;;
+       *)             echo "'$1' cannot be extracted via extract()" ;;
+     esac
+  else
+    echo "'$1' is not a valid file"
+  fi
 }
 
+
+##
 ## aurbuild
+##
 aurbuild() {
-cd ~/build/sources
-packagename=$1
-## wget https://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || return 1
-## https://aur.archlinux.org/cgit/aur.git/snapshot/r-mkl.tar.gz
-curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz || return 1
-echo "Got package..."
-ex $1.tar.gz || return 1
-rm $1.tar.gz || return 1
-cd $1
-makepkg -s || return 1    
+           cd ~/build/sources
+           packagename=$1
+           ## wget https://aur.archlinux.org/packages/${packagename:0:2}/$1/$1.tar.gz || return 1
+           ## https://aur.archlinux.org/cgit/aur.git/snapshot/r-mkl.tar.gz
+           curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz || return 1
+           echo "Got package..."
+           ex $1.tar.gz || return 1
+           rm $1.tar.gz || return 1
+           cd $1
+           makepkg -s || return 1    
 }
 
 # edit file with root privs
 function E() {
-emacsclient -c -a emacs "/sudo:root@localhost:$1"
+         emacsclient -c -a emacs "/sudo:root@localhost:$1"
 }  
 
+pacuc () {
+	sudo pacman -Syu
+	if pacman -Qtdq
+	then
+		echo ":: Unused packages found ..."
+		sudo pacman -Rs $(pacman -Qtdq)
+	else
+		echo ":: No unused packages ..."
+	fi
+}
+
+yapgc () {
+	sudo yaourt -Syua
+	if yaourt -Qtdq
+	then
+		echo ":: Unused packages found ..."
+		sudo yaourt -Rs $(yaourt -Qtdq)
+	else
+		echo ":: No unused packages ..."
+	fi
+}
+
 xxnpExact () {
-R --vanilla CMD build npExact
-R --vanilla CMD check npExact_0.2.tar.gz
-rm npExact.pdf
-R --vanilla CMD Rd2pdf npExact &> /dev/null
+          R --vanilla CMD build npExact
+          R --vanilla CMD check npExact_0.2.tar.gz
+          rm npExact.pdf
+          R --vanilla CMD Rd2pdf npExact &> /dev/null
 }
 
 xxgenBinom () {
-R --vanilla CMD build genBinomTest
-R --vanilla CMD check genBinomTest_0.1.tar.gz
-rm genBinomTest.pdf
-R --vanilla CMD Rd2pdf genBinomTest &> /dev/null
+           R --vanilla CMD build genBinomTest
+           R --vanilla CMD check genBinomTest_0.1.tar.gz
+           rm genBinomTest.pdf
+           R --vanilla CMD Rd2pdf genBinomTest &> /dev/null
 }
 
 xxelm () {
-R --vanilla CMD build elm
-R --vanilla CMD check elm_0.1.tar.gz
-rm elm.pdf
-R --vanilla CMD Rd2pdf elm &> /dev/null
+      R --vanilla CMD build elm
+      R --vanilla CMD check elm_0.1.tar.gz
+      rm elm.pdf
+      R --vanilla CMD Rd2pdf elm &> /dev/null
 }
 
 xxeurostat () {
-rm eurostat/vignettes/figure/*
-rmdir eurostat/vignettes/figure
-R --vanilla CMD build eurostat
-R --vanilla CMD check eurostat_1*.tar.gz
+           rm eurostat/vignettes/figure/*
+           rmdir eurostat/vignettes/figure
+           R --vanilla CMD build eurostat
+           R --vanilla CMD check eurostat_1*.tar.gz
 }
 
 ##
 ## R benchmarks
 ##
 timeR () {
-R CMD BATCH Rbenchmarks.R $1
-sed '/^> / d' -i $1
-sed '/^+ / d' -i $1
+      R CMD BATCH Rbenchmarks.R $1
+      sed '/^> / d' -i $1
+      sed '/^+ / d' -i $1
 }
 
 ##
 ## WIIW stuff
 ## 
 connectWIIW () {
-cd /home/reitero/Downloads/reiter-vpn/
-sudo openvpn --config reiter.ovpn
+            cd /home/reitero/Downloads/reiter-vpn/
+            sudo openvpn --config reiter.ovpn
 }
-
-mountProjects () {
-sudo mount -t cifs //172.16.0.3/W/Reiter/Projects_backup/ /home/reitero/Arbeit/wiiw/backup_Projects -o username=reiter,file_mode=0777,dir_mode=0777
-}
-
-mountRawData () {
-sudo mount -t cifs //172.16.0.3/W/Reiter/RawData_backup/ /home/reitero/Arbeit/wiiw/backup_RawData -o username=reiter,file_mode=0777,dir_mode=0777
-}
-
+ 
 mountPUBLIC () {
-sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
+            sudo mount -t cifs //172.16.0.3/W/Reiter/PUBLIC/ /home/reitero/Arbeit/wiiw/PUBLIC -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountW () {
-sudo mount -t cifs //172.16.0.3/W/ /home/reitero/Arbeit/wiiw/W -o username=reiter,file_mode=0777,dir_mode=0777
+       sudo mount -t cifs //172.16.0.3/W/ /home/reitero/Arbeit/wiiw/W -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountP () {
-sudo mount -t cifs //172.16.0.3/P/Reiter/Projects_Backup /home/reitero/Arbeit/wiiw/Projects_Backup -o username=reiter,file_mode=0777,dir_mode=0777
-sudo mount -t cifs //172.16.0.3/P/Reiter/Data_Backup /home/reitero/Arbeit/wiiw/Data_Backup -o username=reiter,file_mode=0777,dir_mode=0777
+       sudo mount -t cifs //172.16.0.3/P/Reiter/Projects_Backup /home/reitero/Arbeit/wiiw/Projects_Backup -o username=reiter,file_mode=0777,dir_mode=0777
+       sudo mount -t cifs //172.16.0.3/P/Reiter/Data_Backup /home/reitero/Arbeit/wiiw/Data_Backup -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
 mountWIIWFolders () {
-mountProjects
-mountRawData
-mountPUBLIC
+                 mountProjects
+                 mountRawData
+                 mountPUBLIC
 }
 
 unmountWIIWFolders () {
-sudo umount /home/reitero/Arbeit/wiiw/backup_Projects
-sudo umount /home/reitero/Arbeit/wiiw/backup_RawData
-sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
+                   sudo umount /home/reitero/Arbeit/wiiw/backup_Projects
+                   sudo umount /home/reitero/Arbeit/wiiw/backup_RawData
+                   sudo umount /home/reitero/Arbeit/wiiw/PUBLIC
 }
 
 remWIIW () {
-rdesktop -g 96% -P -z -x l -r sound:off -d WIIW -u reiter -p wior_2 172.16.5.1
+        rdesktop -g 96% -P -z -x l -r sound:off -d WIIW -u reiter -p wior_2 172.16.5.1
 }
 
+remWIIWfixed () {
+             rdesktop -g 1500x850 -P -z -x l -r sound:off -d WIIW -u reiter -p wior_2 172.16.5.1
+}
 
 ##
 ## UniVie Stuff
@@ -132,27 +152,27 @@ rdesktop -g 96% -P -z -x l -r sound:off -d WIIW -u reiter -p wior_2 172.16.5.1
 
 ## Bonnie
 mountBonnie () {
-sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
+            sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
 }
 
 sshBonnie () {
-ssh 'a0603045@bonnie.par.univie.ac.at'
+          ssh 'a0603045@bonnie.par.univie.ac.at'
 }
 
 ## Cora
 mountCora () {
-sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016S/hpc/cora
+          sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016S/hpc/cora
 }
 
 sshCora () {
-ssh 'a0603045@cora.par.univie.ac.at'
+        ssh 'a0603045@cora.par.univie.ac.at'
 }
 
 ## Harris
 sshHarris () {
-ssh 'a0603045@harris.cs.univie.ac.at'
+          ssh 'a0603045@harris.cs.univie.ac.at'
 }
 
 mountHarris () {
-sshfs a0603045@harris.cs.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016W/nhpa/harris
+            sshfs a0603045@harris.cs.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016W/nhpa/harris
 }
