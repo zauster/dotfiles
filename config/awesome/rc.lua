@@ -15,6 +15,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
+local lain = require("lain")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -42,7 +44,9 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+--beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+beautiful.init(awful.util.getdir("config") .."/themes/adapted/theme.lua")
+
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt -name DURxvt"
@@ -157,8 +161,61 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
+
+space = wibox.widget.textbox('  ')
+spr = wibox.widget.textbox('<span color="'..beautiful.border_focus..'" weight="bold"> ┃ </span>')
+
+
 -- Create a textclock widget
+-- mytextclock = wibox.widget.textclock( '<span font="'..beautiful.font..'" background="'..beautiful.white1..'" color="'..beautiful.background..'"> %a %b %d, %H:%M </span>' )
 mytextclock = wibox.widget.textclock()
+
+-- Power widget {{{
+local widget_power = lain.widget.bat({
+      timeout = 0.1,
+      battery = BAT,
+      notify = "on",
+
+      settings = function()
+        if bat_now.status == 'N/A' then
+          widget:set_markup('<span font="'..beautiful.icon_font..'"></span> AC ')
+        elseif bat_now.status == 'Charging' then
+          widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+        else
+          if bat_now.perc <= 10 then
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          elseif bat_now.perc <= 30 then
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          elseif bat_now.perc <= 50 then
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          elseif bat_now.perc <= 70 then
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          elseif bat_now.perc <= 99 then
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          else
+            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+          end
+        end
+
+        bat_notification_low_preset = {
+          title = "Battery low",
+          text = "Plug the cable!",
+          timeout = 15,
+          fg = beautiful.red1,
+          bg = beautiful.black2
+        }
+
+        bat_notification_critical_preset = {
+          title = "Battery exhausted",
+          text = "Shutdown imminent",
+          timeout = 15,
+          fg = beautiful.white1,
+          bg = beautiful.black2
+        }
+
+      end
+})
+-- }}}
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -221,7 +278,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 
 tags = {
-   names = { "", "", "", "", ""},
+   names = { "  ", "  ", "  ", "  ", "  "},
    layout = { awful.layout.layouts[1], awful.layout.layouts[4],
               awful.layout.layouts[2], awful.layout.layouts[1],
               awful.layout.layouts[1] }
@@ -266,7 +323,8 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            -- mylauncher,
+            s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -275,8 +333,10 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            spr,
+            widget_power,
+            space,
             mytextclock,
-            s.mylayoutbox,
         },
     }
 end)
@@ -420,7 +480,39 @@ globalkeys = awful.util.table.join(
    -- Menubar
    awful.key({ modkey }, "p", function() menubar.show() end,
       {description = "show the menubar", group = "launcher"})
+   
 )
+
+-- Custom keybindings
+globalkeys = awful.util.table.join(globalkeys, 
+             awful.key({ modkey, }, "#94",
+                function() awful.spawn("pcmanfm") end),
+             awful.key({ }, "XF86Explorer",
+                function() awful.spawn("pcmanfm") end),
+             awful.key({ modkey, }, "i",
+                function () awful.spawn("chromium") end),
+             awful.key({ modkey, }, "a",
+                function () awful.spawn("firefox") end),
+             awful.key({ modkey, }, "o",
+                function () awful.spawn("thunderbird") end),
+             awful.key({ modkey, }, "e",
+                function () awful.spawn("emacs") end),
+             awful.key({ modkey, }, "#52",
+                function () awful.spawn("sonata") end),
+             awful.key({ }, "XF86MonBrightnessDown",
+                function () awful.spawn("xbacklight -dec 7") end),
+             awful.key({ }, "XF86MonBrightnessUp",
+                function () awful.spawn("xbacklight -inc 7") end),
+             awful.key({ }, "XF86AudioMute",
+                function () awful.spawn("amixer set Master toggle") end),
+             awful.key({ }, "XF86AudioRaiseVolume",
+                function () awful.spawn("amixer -q sset Master 3%+", false)
+             end),
+             awful.key({ }, "XF86AudioLowerVolume",
+                function () awful.spawn("amixer -q sset Master 3%-", false)
+             end)
+)
+
 
 clientkeys = awful.util.table.join(
    awful.key({ modkey,           }, "f",
