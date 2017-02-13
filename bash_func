@@ -46,23 +46,12 @@ function E() {
          emacsclient -c -a emacs "/sudo:root@localhost:$1"
 }  
 
-pacuc () {
-	sudo pacman -Syu
-	if pacman -Qtdq
-	then
-		echo ":: Unused packages found ..."
-		sudo pacman -Rs $(pacman -Qtdq)
-	else
-		echo ":: No unused packages ..."
-	fi
-}
-
 yapgc () {
-	sudo yaourt -Syua
+      	yaourt -Syua
 	if yaourt -Qtdq
 	then
 		echo ":: Unused packages found ..."
-		sudo yaourt -Rs $(yaourt -Qtdq)
+	        yaourt -Rs $(yaourt -Qtdq)
 	else
 		echo ":: No unused packages ..."
 	fi

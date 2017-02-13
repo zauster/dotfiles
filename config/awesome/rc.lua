@@ -163,12 +163,32 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 
 space = wibox.widget.textbox('  ')
-spr = wibox.widget.textbox('<span color="'..beautiful.border_focus..'" weight="bold"> ┃ </span>')
+spr = wibox.widget.textbox('<span color="'..beautiful.border_focus..'" weight="bold"> ┃</span>')
 
 
 -- Create a textclock widget
 -- mytextclock = wibox.widget.textclock( '<span font="'..beautiful.font..'" background="'..beautiful.white1..'" color="'..beautiful.background..'"> %a %b %d, %H:%M </span>' )
 mytextclock = wibox.widget.textclock()
+
+
+--
+-- Widgets
+--
+
+-- Align text to the right {{{
+local function pad_to_length(value, ...)
+   local max_length = 0
+   value = tostring(value)
+   for i=1, select('#', ...) do
+      local arg = tostring(select(i, ...))
+      max_length = math.max(max_length, #arg)
+   end
+   if max_length > #value then
+      value = string.rep(' ', max_length - #value) .. value
+   end
+   return value
+end
+-- }}}
 
 -- Power widget {{{
 local widget_power = lain.widget.bat({
@@ -178,22 +198,20 @@ local widget_power = lain.widget.bat({
 
       settings = function()
         if bat_now.status == 'N/A' then
-          widget:set_markup('<span font="'..beautiful.icon_font..'"></span> AC ')
+           widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> AC')
         elseif bat_now.status == 'Charging' then
-          widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+           widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
         else
           if bat_now.perc <= 10 then
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
-          elseif bat_now.perc <= 30 then
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
-          elseif bat_now.perc <= 50 then
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+          elseif bat_now.perc <= 35 then
+             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
           elseif bat_now.perc <= 70 then
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
-          elseif bat_now.perc <= 99 then
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+          elseif bat_now.perc <= 85 then
+             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
           else
-            widget:set_markup('<span font="'..beautiful.icon_font..'"></span> '..bat_now.perc..'%  ')
+             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
           end
         end
 
@@ -215,6 +233,143 @@ local widget_power = lain.widget.bat({
 
       end
 })
+-- local tooltip_bat = awful.tooltip({
+--   objects = { widget_power },
+--   margin_leftright = 6,
+--   margin_topbottom = 16,
+--   shape = gears.shape.infobubble,
+--   timer_function = function()
+--     local title = "Power house"
+--     local tlen = string.len(title)
+--     local text
+--     if bat_now.status == 'N/A' then
+--       text = ' <span font="'..beautiful.mono_font..'">'..
+--              ' <span weight="bold" color="'..beautiful.fg_normal..'">'..title..'</span> \n'..
+--              ' <span weight="bold">'..string.rep('-', tlen)..'</span> \n'..
+--              ' ▪ status    <span color="'..beautiful.fg_normal..'">\n   Plugged in \n   No battery </span>'
+--       text = text..'</span>'
+--     else
+--       text = ' <span font="'..beautiful.mono_font..'">'..
+--              ' <span weight="bold" color="'..beautiful.fg_normal..'">'..title..'</span> \n'..
+--              ' <span weight="bold">'..string.rep('-', tlen)..'</span> \n'
+--       if bat_now.status == 'Discharging' then
+--         text = text..' ▪ status    <span color="'..beautiful.fg_normal..'">discharging </span>\n'
+--       elseif bat_now.status == 'Full' then
+--         text = text..' ▪ status    <span color="'..beautiful.fg_normal..'">charged </span>\n'
+--       else
+--         text = text..' ▪ status    <span color="'..beautiful.fg_normal..'">charging </span>\n'
+--       end
+--       text = text..' ⚡ level     <span color="'..beautiful.fg_normal..'">'..bat_now.perc..'% </span>\n'..
+--                   ' ◴ time left <span color="'..beautiful.fg_normal..'">'..bat_now.time..' </span>'
+--       text = text..'</span>'
+--     end
+--     return text
+--   end
+-- })
+-- Power widget }}}
+
+-- cpu: 
+
+
+-- -- CPU widget {{{
+-- local widget_cpu = wibox.layout.fixed.horizontal()
+-- local widget_cpu_graph = wibox.widget.graph()
+-- local widget_cpu_text = lain.widget.cpu({
+--       settings = function()
+--          widget:set_markup('<span font="'..beautiful.icon_font..'"> </span>  '..cpu_now.usage..'%')
+--          widget:buttons(awful.util.table.join( awful.button({ }, 1, function () awful.util.spawn_with_shell(mytop) end)))
+--          widget_cpu_graph:add_value(cpu_now.usage/100)
+--       end
+-- })
+
+-- -- widget_cpu_text:buttons(awful.util.table.join(
+-- --                            awful.button({ }, 1, function () awful.util.spawn_with_shell(mytop) end)))
+-- widget_cpu_graph:set_width(20)
+-- widget_cpu_graph:set_background_color(beautiful.bg_normal)
+-- widget_cpu_graph:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 18 }, stops = { { 0, beautiful.gradient_1 }, { 0.5, beautiful.gradient_2 }, { 1,beautiful.gradient_3 } } })
+-- widget_cpu:add(widget_cpu_text)
+-- widget_cpu:add(widget_cpu_graph)
+-- -- CPU widget }}}
+
+-- temp:
+
+
+-- ALSA volume bar {{{2
+local icon_alsa = wibox.widget.textbox()
+icon_alsa:buttons(awful.util.table.join(
+  awful.button({ }, 1, function () awful.spawn.with_shell(mymixer) end),
+  awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr1) end),
+  awful.button({ altkey }, 1, function () awful.spawn.with_shell(musicplr2) end)))
+local volume = lain.widget.alsabar({width = 35, ticks = true, ticks_size = 4, step = "2%",
+  settings = function()
+      if volume_now.status == "off" then
+          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+      elseif volume_now.level == 0 then
+          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+      elseif volume_now.level <= 50 then
+          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+      else
+          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+      end
+  end,
+  colors =
+  {
+      background = beautiful.bg_normal,
+      mute = beautiful.red1,
+      -- unmute = function()
+      --   if volume_now.level <= 10 then
+      --     unmute = beautiful.red1
+      --   elseif volume_now.level <= 50 then
+      --     unmute = beautiful.blue1
+      --   else
+      --     unmute = beautiful.green1
+      --   end
+      -- end
+      unmute = beautiful.fg_normal
+  }
+})
+local volmargin = wibox.container.margin(volume.bar, 8, 0, 5, 5)
+local widget_alsa = wibox.container.background(volmargin)
+-- }}}
+
+-- Memory widget {{{2
+local widget_mem = lain.widget.mem({
+      settings = function()
+         widget:set_markup('<span font="' ..beautiful.icon_font .. '"> </span>  '..mem_now.used..' MB')
+      end
+})
+
+-- local tooltip_mem = awful.tooltip({
+--       objects = { widget_mem },
+--       margin_leftright = 6,
+--       margin_topbottom = 16,
+--       shape = gears.shape.infobubble,
+--       timer_function = function()
+--          local title = "memory &amp; swap usage"
+--          local used = pad_to_length(mem_now.used, mem_now.swapused)
+--          local swapused = pad_to_length(mem_now.swapused, mem_now.used)
+--          local text
+--          text = ' <span font="'..beautiful.mono_font..'">'..
+--             ' <span weight="bold" color="'..beautiful.fg_normal..'">'..title..'</span> \n'..
+--             ' <span weight="bold">-------------------</span> \n'..
+--             ' ▪ memory <span color="'..beautiful.fg_normal..'">'..used..'</span> MB \n'..
+--             ' ▪ swap   <span color="'..beautiful.fg_normal..'">'..swapused..'</span> MB </span>'
+--          return text
+--       end
+-- })
+-- Memory widget }}}
+
+-- Temperature widget {{{
+local widget_temp = lain.widget.temp({
+      tempfile = TEMPFILE,
+      settings = function ()
+         widget:set_markup('<span font="'..beautiful.icon_font..'"> </span> '..coretemp_now..'°')
+      end
+})
+
+-- Temperature widget }}}
+
+
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -278,7 +433,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 
 tags = {
-   names = { "  ", "  ", "  ", "  ", "  "},
+   names = { "  ", "  ", "  ", "  ", "  "},
    layout = { awful.layout.layouts[1], awful.layout.layouts[4],
               awful.layout.layouts[2], awful.layout.layouts[1],
               awful.layout.layouts[1] }
@@ -333,9 +488,19 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+
+            spr,
+            widget_alsa,
+            spr,
+            widget_temp,
+            spr,
+            widget_cpu,
+            spr,
+            widget_mem,
             spr,
             widget_power,
-            space,
+            spr,
+            -- space,
             mytextclock,
         },
     }
