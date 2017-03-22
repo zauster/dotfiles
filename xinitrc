@@ -19,9 +19,9 @@ exec awesome
 ( ( sleep 10 && /usr/bin/xscreensaver -no-splash -display :0.0 ) & )
 
 # start some programs
-sleep 2 && dropbox &
-connman-ui-gtk &
-connman-notify &
-bluemanmanager &
-redshift-gtk &
+# sleep 2 && dropbox &
+# connman-ui-gtk &
+# connman-notify &
+# bluemanmanager &
+# redshift-gtk &
 

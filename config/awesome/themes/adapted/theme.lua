@@ -8,6 +8,9 @@ theme      = {}
 -- theme.icondir              = 
 theme.wallpaper            = "/home/reitero/Dotfiles/wallpapers/solarized_ball.png"
 theme.border_width         = "3"
+-- theme.border_normal        = "3"
+-- theme.border_focused       = "3"
+-- theme.border_marked        = "3"
 theme.menu_height          = "20"
 theme.menu_width           = "144"
 theme.useless_gap          = "3"
@@ -30,10 +33,6 @@ theme.icon_font            = "FontAwesome 9"
 --}}}
 
 -- Theme colours {{{
-theme.foreground           = '#eceff1'
-theme.background           = '#09212d' -- "#213742" -- a lighter tint
-theme.cursor               = '#1c222e'
-
 theme.black1               = '#363636'
 theme.black2               = '#121212'
 theme.grey1                = '#696969'
@@ -53,23 +52,28 @@ theme.blue2                = '#527496'
 theme.blue3                = '#335980'
 theme.magenta1             = '#aa7fff'
 theme.magenta2             = '#7759B3'
-theme.cyan1                = '#5fafaf'
+theme.cyan1                = '#559d9d' -- '#5fafaf'
 theme.cyan2                = '#5f8787'
-theme.white1               = '#ffffff'
+theme.white1               = '#f4f4f4' -- '#f9f9f9' -- '#ffffff'
 theme.white2               = '#cccccc'
 theme.white3               = '#808080'
 
+theme.foreground           = '#eceff1'
+-- theme.background           = '#09212d' -- "#213742" -- a lighter tint
+theme.background           = '#213742' -- a lighter tint
+theme.cursor               = '#1c222e'
+
 theme.fg_normal            = theme.foreground
-theme.bg_normal            = theme.green4
-theme.fg_focus             = theme.red1
-theme.bg_focus             = theme.green4
+theme.bg_normal            = theme.green3
+theme.fg_focus             = theme.cyan1
+theme.bg_focus             = theme.white1
 theme.fg_em                = theme.grey1
 theme.bg_em                = theme.grey2
 theme.fg_urgent            = theme.white1
 theme.bg_urgent            = theme.red1
-theme.border_normal        = theme.green4
-theme.border_focus         = theme.green3
-theme.border_marked        = theme.green1
+theme.border_normal        = theme.cyan2 --green3
+theme.border_focus         = theme.white2
+theme.border_marked        = theme.magenta1 --cyan1 --green1
 theme.taglist_fg_empty     = theme.cyan2
 theme.taglist_bg_empty     = theme.green3
 theme.taglist_fg_focus     = theme.green2

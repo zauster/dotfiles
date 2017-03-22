@@ -115,6 +115,11 @@ mountP () {
        sudo mount -t cifs //172.16.0.3/P/Reiter/Data_Backup /home/reitero/Arbeit/wiiw/Data_Backup -o username=reiter,file_mode=0777,dir_mode=0777
 }
 
+unmountP () {
+       sudo umount /home/reitero/Arbeit/wiiw/Projects_Backup
+       sudo umount /home/reitero/Arbeit/wiiw/Data_Backup
+}
+
 mountWIIWFolders () {
                  mountProjects
                  mountRawData
