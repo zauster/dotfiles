@@ -546,6 +546,23 @@ globalkeys = awful.util.table.join(
    --     end,
    --     {description = "focus previous by index", group = "client"}
    -- ),
+   awful.key({ modkey,           }, "z",
+      function ()
+       --   currentscreen = awful.screen.focused
+       --   if currentscreen == 1 then
+            awful.screen.focus(2)
+       --   else
+       --      awful.screen.focus(1)
+       --   end
+       end,
+       {description = "focus some screen", group = "client"}
+   ),
+   awful.key({ modkey,           }, "b",
+      function ()
+         awful.screen.focus(1)
+      end,
+      {description = "focus some screen", group = "client"}
+   ),
    awful.key({ modkey,           }, "v", function () mymainmenu:show() end,
       {description = "show main menu", group = "awesome"}),
 
