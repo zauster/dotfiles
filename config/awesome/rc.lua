@@ -15,7 +15,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
-local lain = require("lain")
+-- local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -192,48 +192,48 @@ end
 -- }}}
 
 -- Power widget {{{
-local widget_power = lain.widget.bat({
-      timeout = 0.1,
-      battery = BAT,
-      notify = "on",
+-- local widget_power = lain.widget.bat({
+--       timeout = 0.1,
+--       battery = BAT,
+--       notify = "on",
 
-      settings = function()
-         if bat_now.status == 'N/A' then
-            widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> AC')
-         elseif bat_now.status == 'Charging' then
-            widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-         else
-            if bat_now.perc <= 10 then
-               widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-            elseif bat_now.perc <= 35 then
-               widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-            elseif bat_now.perc <= 70 then
-               widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-            elseif bat_now.perc <= 85 then
-               widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-            else
-               widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
-            end
-         end
+--       settings = function()
+--          if bat_now.status == 'N/A' then
+--             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> AC')
+--          elseif bat_now.status == 'Charging' then
+--             widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--          else
+--             if bat_now.perc <= 10 then
+--                widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--             elseif bat_now.perc <= 35 then
+--                widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--             elseif bat_now.perc <= 70 then
+--                widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--             elseif bat_now.perc <= 85 then
+--                widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--             else
+--                widget:set_markup('<span font="'..beautiful.icon_font..'">  </span> '..bat_now.perc..'%')
+--             end
+--          end
 
-         bat_notification_low_preset = {
-            title = "Battery low",
-            text = "Plug the cable!",
-            timeout = 15,
-            fg = beautiful.red1,
-            bg = beautiful.black2
-         }
+--          bat_notification_low_preset = {
+--             title = "Battery low",
+--             text = "Plug the cable!",
+--             timeout = 15,
+--             fg = beautiful.red1,
+--             bg = beautiful.black2
+--          }
 
-         bat_notification_critical_preset = {
-            title = "Battery exhausted",
-            text = "Shutdown imminent",
-            timeout = 15,
-            fg = beautiful.white1,
-            bg = beautiful.black2
-         }
+--          bat_notification_critical_preset = {
+--             title = "Battery exhausted",
+--             text = "Shutdown imminent",
+--             timeout = 15,
+--             fg = beautiful.white1,
+--             bg = beautiful.black2
+--          }
 
-      end
-})
+--       end
+-- })
 -- local tooltip_bat = awful.tooltip({
 --   objects = { widget_power },
 --   margin_leftright = 6,
@@ -270,57 +270,57 @@ local widget_power = lain.widget.bat({
 -- Power widget }}}
 
 -- CPU
-local widget_cpu = lain.widget.cpu({
-      settings = function()
-         -- widget:set_text(" " .. cpu_now.usage .. "% ")
-         widget:set_markup("<span font='" ..beautiful.icon_font.. "'> </span> " .. cpu_now.usage .. " %")
-      end
-})
+-- local widget_cpu = lain.widget.cpu({
+--       settings = function()
+--          -- widget:set_text(" " .. cpu_now.usage .. "% ")
+--          widget:set_markup("<span font='" ..beautiful.icon_font.. "'> </span> " .. cpu_now.usage .. " %")
+--       end
+-- })
 
--- ALSA volume bar {{{
-local icon_alsa = wibox.widget.textbox()
-icon_alsa:buttons(awful.util.table.join(
-                     awful.button({ }, 1, function () awful.spawn.with_shell(mymixer) end),
-                     awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr1) end),
-                     awful.button({ altkey }, 1, function () awful.spawn.with_shell(musicplr2) end)))
-local volume = lain.widget.alsabar({width = 35, ticks = true, ticks_size = 4, step = "2%",
-                                    settings = function()
-                                       if volume_now.status == "off" then
-                                          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
-                                       elseif volume_now.level == 0 then
-                                          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
-                                       elseif volume_now.level <= 50 then
-                                          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
-                                       else
-                                          icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
-                                       end
-                                    end,
-                                    colors =
-                                       {
-                                          background = beautiful.bg_normal,
-                                          mute = beautiful.red1,
-                                          -- unmute = function()
-                                          --   if volume_now.level <= 10 then
-                                          --     unmute = beautiful.red1
-                                          --   elseif volume_now.level <= 50 then
-                                          --     unmute = beautiful.blue1
-                                          --   else
-                                          --     unmute = beautiful.green1
-                                          --   end
-                                          -- end
-                                          unmute = beautiful.fg_normal
-                                       }
-})
-local volmargin = wibox.container.margin(volume.bar, 8, 0, 5, 5)
-local widget_alsa = wibox.container.background(volmargin)
--- }}}
+-- -- ALSA volume bar {{{
+-- local icon_alsa = wibox.widget.textbox()
+-- icon_alsa:buttons(awful.util.table.join(
+--                      awful.button({ }, 1, function () awful.spawn.with_shell(mymixer) end),
+--                      awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr1) end),
+--                      awful.button({ altkey }, 1, function () awful.spawn.with_shell(musicplr2) end)))
+-- local volume = lain.widget.alsabar({width = 35, ticks = true, ticks_size = 4, step = "2%",
+--                                     settings = function()
+--                                        if volume_now.status == "off" then
+--                                           icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+--                                        elseif volume_now.level == 0 then
+--                                           icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+--                                        elseif volume_now.level <= 50 then
+--                                           icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+--                                        else
+--                                           icon_alsa:set_markup('<span font="'..beautiful.icon_font..'"></span>')
+--                                        end
+--                                     end,
+--                                     colors =
+--                                        {
+--                                           background = beautiful.bg_normal,
+--                                           mute = beautiful.red1,
+--                                           -- unmute = function()
+--                                           --   if volume_now.level <= 10 then
+--                                           --     unmute = beautiful.red1
+--                                           --   elseif volume_now.level <= 50 then
+--                                           --     unmute = beautiful.blue1
+--                                           --   else
+--                                           --     unmute = beautiful.green1
+--                                           --   end
+--                                           -- end
+--                                           unmute = beautiful.fg_normal
+--                                        }
+-- })
+-- local volmargin = wibox.container.margin(volume.bar, 8, 0, 5, 5)
+-- local widget_alsa = wibox.container.background(volmargin)
+-- -- }}}
 
--- Memory widget {{{2
-local widget_mem = lain.widget.mem({
-      settings = function()
-         widget:set_markup('<span font="' ..beautiful.icon_font .. '"> </span>  '..mem_now.used..' MB')
-      end
-})
+-- -- Memory widget {{{2
+-- local widget_mem = lain.widget.mem({
+--       settings = function()
+--          widget:set_markup('<span font="' ..beautiful.icon_font .. '"> </span>  '..mem_now.used..' MB')
+--       end
+-- })
 
 -- local tooltip_mem = awful.tooltip({
 --       objects = { widget_mem },
@@ -343,13 +343,13 @@ local widget_mem = lain.widget.mem({
 -- Memory widget }}}
 
 -- Temperature widget {{{
-local widget_temp = lain.widget.temp({
-      tempfile = "/sys/class/thermal/thermal_zone1/temp",
-      settings = function ()
-         widget:set_markup('<span font="'..beautiful.icon_font..'"> </span> '..coretemp_now..'°')
-      end
-})
--- Temperature widget }}}
+-- local widget_temp = lain.widget.temp({
+--       tempfile = "/sys/class/thermal/thermal_zone1/temp",
+--       settings = function ()
+--          widget:set_markup('<span font="'..beautiful.icon_font..'"> </span> '..coretemp_now..'°')
+--       end
+-- })
+-- -- Temperature widget }}}
 
 
 -- Keyboard map indicator and changer {{{
@@ -498,16 +498,16 @@ awful.screen.connect_for_each_screen(function(s)
             spr,
             kbdcfg.widget,
             spr,
-            widget_alsa,
-            spr,
-            widget_temp,
-            spr,
-            widget_cpu,
-            spr,
-            widget_mem,
-            spr,
-            widget_power,
-            spr,
+            -- widget_alsa,
+            -- spr,
+            -- widget_temp,
+            -- spr,
+            -- widget_cpu,
+            -- spr,
+            -- widget_mem,
+            -- spr,
+            -- widget_power,
+            -- spr,
             -- space,
             mytextclock,
          },
@@ -687,6 +687,8 @@ globalkeys = awful.util.table.join(globalkeys,
                                       function () awful.spawn("thunderbird") end),
                                    awful.key({ modkey, }, "e",
                                       function () awful.spawn("emacs") end),
+                                   awful.key({ modkey, }, "j",
+                                      function () awful.spawn("urxvt -name LURxvt") end),
                                    awful.key({ modkey, }, "#52",
                                       function () awful.spawn("sonata") end),
                                    awful.key({ }, "XF86MonBrightnessDown",
