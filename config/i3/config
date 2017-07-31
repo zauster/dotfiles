@@ -190,6 +190,7 @@ bindsym $mod+Shift+q exec i3lock --color=475263
 # #00bcd4 (cyan)
 # #3f51b5 (blue)
 
+set $cyan600 #00acc1
 set $cyan700 #0097a7
 set $lightgreen500 #8bc34a
 set $bluegrey500 #607d8b
@@ -197,9 +198,26 @@ set $indigo500 #3f51b5
 set $blue500 #2196f3
 set $orange500 #ff9800
 set $green500 #4caf50
-set $teal500 #009688
 set $purple500 #9c27b0
 set $red500 #f44336
+
+
+
+set $grey500 #9e9e9e
+set $grey50 #fafafa
+set $grey100 #f5f5f5
+set $grey200 #eeeeee
+set $grey300 #e0e0e0
+set $grey400 #bdbdbd
+set $grey500 #9e9e9e
+set $grey600 #757575
+set $grey700 #616161
+set $grey800 #424242
+set $grey900 #212121
+
+set $teal500 #009688
+set $teal800 #00695c
+set $teal900 #004d40
 
 set $bg-color 	         #2f343f
 set $border-color        #0097a7
@@ -211,8 +229,8 @@ set $urgent-bg-color     #E53935
 # cyan
 #  bg-color
 # window colors         border             background         text                 indicator
-client.focused          $cyan700           $cyan700           $lightwhite          $orange500        
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.focused          $cyan600           $cyan700           $lightwhite          $orange500        
+client.unfocused        $inactive-bg-color $grey800           $grey500             $inactive-bg-color
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.urgent           $red500            $red500            $lightwhite          $red500
 
@@ -252,9 +270,9 @@ for_window [class="^.*"] border pixel 3
 
 # start dmenu (a program launcher)
 bindsym $mod+b exec dmenu_run
-bindsym $mod+a exec rofi -show run -lines 5 -eh 1 -width 40 -bw 3
+bindsym $mod+a exec rofi -show run -lines 5 -eh 1 -width 40 -bw 3 -bg "$grey500" -fg "$grey500" -opacity "85"
 #-lines 3 -eh 1 -width 100 -padding 800
-# bindsym $mod+b exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$lightwhite" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18" -opacity "85"
+# bindsym $mod+a exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$lightwhite" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18" -opacity "85"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -273,7 +291,7 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 7
 # applications
 bindsym $mod+udiaeresis exec pcmanfm
 bindsym $mod+odiaeresis exec sonata
-bindsym $mod+adiaeresis exec emacs
+bindsym $mod+adiaeresis exec emacsen
 bindsym $mod+p exec firefox
 bindsym $mod+z exec thunderbird
 
@@ -282,8 +300,8 @@ bindsym $mod+F2 exec arandr
 bindsym $mod+F3 exec blueman-manager
 
 # autostarted applications
-exec --no-startup-id polybar -r zauster
-exec_always --no-startup-id feh --bg-scale /home/reitero/Dotfiles/wallpapers/solarized_ball.png
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id feh --bg-scale /home/reitero/Dotfiles/wallpapers/solarized_ball_without.png
 exec --no-startup-id connman-ui-gtk
 exec --no-startup-id redshift-gtk
 

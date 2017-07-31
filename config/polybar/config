@@ -11,11 +11,16 @@
 ; https://material.io/guidelines/style/color.html#color-color-palette
 
 [colors]
-;background = ${xrdb:color0:#222} 
-; background = #222222
-; background-alt = #444444
-background = #323232
-background-alt = #565656
+;background = ${xrdb:color0:#222}
+
+;; old backgrounds
+; background = #323232
+; background-alt = #565656
+
+;; 'material'-like backgrounds
+background = #222d32
+background-alt = #313d43
+
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #666666
@@ -44,13 +49,14 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 3
-line-color = #f00
+line-color = #ffffff
 
-border-size = 4
+border-size = 0
+;;border-color = #ffffff
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 0
 
 module-margin-left = 1
 module-margin-right = 2
@@ -201,7 +207,7 @@ interface = wlp2s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = ${colors.indigo500}
+format-connected-underline = ${colors.orange500}
 label-connected = %essid%
 
 format-disconnected =
