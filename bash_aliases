@@ -25,6 +25,7 @@ alias pag='ps aux | grep'
 alias initLeftDisplay='xrandr --output HDMI1 --mode 1280x720 --left-of eDP1'
 alias shutLeftDisplay='xrandr --output HDMI1 --off'
 alias initRightTV='xrandr --output HDMI1 --auto --right-of eDP1'
+alias open='xdg-open'
 
 alias ..="cd .."
 alias ...="cd ../.."
