@@ -548,15 +548,15 @@ check_com -c dircolors && eval $(dircolors -b)
 isdarwin && export CLICOLOR=1
 isfreebsd && export CLICOLOR=1
 
-# do MacPorts setup on darwin
-if isdarwin && [[ -d /opt/local ]]; then
-    # Note: PATH gets set in /etc/zprofile on Darwin, so this can't go into
-    # zshenv.
-    PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-    MANPATH="/opt/local/share/man:$MANPATH"
-fi
-# do Fink setup on darwin
-isdarwin && xsource /sw/bin/init.sh
+# # do MacPorts setup on darwin
+# if isdarwin && [[ -d /opt/local ]]; then
+#     # Note: PATH gets set in /etc/zprofile on Darwin, so this can't go into
+#     # zshenv.
+#     PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+#     MANPATH="/opt/local/share/man:$MANPATH"
+# fi
+# # do Fink setup on darwin
+# isdarwin && xsource /sw/bin/init.sh
 
 # load our function and completion directories
 for fdir in /usr/share/grml/zsh/completion /usr/share/grml/zsh/functions; do
@@ -3352,7 +3352,7 @@ bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[D' backward-char
 bindkey '^[[B' history-beginning-search-forward
 # bindkey '^[[B' down-line-or-search
-bindkey '^[[C' forward-char 
+bindkey '^[[C' forward-char
 bindkey '^[[2~' overwrite-mode
 # [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"    history-beginning-search-backward
 # [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}"  history-beginning-search-forward
@@ -3360,6 +3360,8 @@ bindkey '^[[2~' overwrite-mode
 ## source bash stuff
 source ~/.bash_aliases
 source ~/.bash_func
+
+export LD_LIBRARY_PATH="/home/reitero/sfw/lib:/home/reitero/sfw/Boost/Boost_1.61/lib"
 
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4

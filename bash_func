@@ -162,11 +162,26 @@ sshCora () {
         ssh 'a0603045@cora.par.univie.ac.at'
 }
 
-## Harris
-sshHarris () {
-          ssh 'a0603045@harris.cs.univie.ac.at'
+## Lewis Server. 4f3}lewis
+sshLewis () {
+          ssh 'a0603045@lewis.cs.univie.ac.at'
 }
 
-mountHarris () {
-            sshfs a0603045@harris.cs.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016W/nhpa/harris
+mountLewis () {
+            sshfs a0603045@lewis.cs.univie.ac.at:/home/a0603045/models/ /home/reitero/Arbeit/Uni/2017W/Praktikum1/Lewis
+}
+
+rsyncLewis () {
+           cd /home/reitero/Arbeit/Uni/2017W/Praktikum1/
+           rsync -vz Models/Circles/*.R Lewis/circles
+           rsync -vz Models/Circles/*.sh Lewis/circles
+           rsync -rvz Models/Circles/FLAME_parallel/*.c Lewis/circles/FLAME_parallel
+           rsync -rvz Models/Circles/FLAME_serial/*.c Lewis/circles/FLAME_serial
+           cd -
+}
+
+rsyncResults () {
+           cd /home/reitero/Arbeit/Uni/2017W/Praktikum1/
+           rsync -rvz Lewis/circles/Results/ Models/Circles/Results 
+           cd -
 }
