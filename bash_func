@@ -164,24 +164,44 @@ sshCora () {
 
 ## Lewis Server. 4f3}lewis
 sshLewis () {
-          ssh 'a0603045@lewis.cs.univie.ac.at'
+          ssh -X 'a0603045@lewis.cs.univie.ac.at'
 }
 
+scpLewis () {
+         scp $1 a0603045@lewis.cs.univie.ac.at:~/
+}
+
+
 mountLewis () {
-            sshfs a0603045@lewis.cs.univie.ac.at:/home/a0603045/models/ /home/reitero/Arbeit/Uni/2017W/Praktikum1/Lewis
+            sshfs a0603045@lewis.cs.univie.ac.at:/home/a0603045/models/ /home/reitero/Arbeit/Uni/MA/Lewis
+}
+
+mountVSC() {
+           sshfs olreit@vsc3.vsc.ac.at:/home/lv71139/olreit /home/reitero/Arbeit/Uni/MA/VSC
 }
 
 rsyncLewis () {
-           cd /home/reitero/Arbeit/Uni/2017W/Praktikum1/
-           rsync -vz Models/Circles/*.R Lewis/circles
-           rsync -vz Models/Circles/*.sh Lewis/circles
-           rsync -rvz Models/Circles/FLAME_parallel/*.c Lewis/circles/FLAME_parallel
-           rsync -rvz Models/Circles/FLAME_serial/*.c Lewis/circles/FLAME_serial
+           cd /home/reitero/Arbeit/Uni/MA
+           rsync -vz FLAME/*.R Lewis/Benchmark
+           # rsync -vz FLAME/*.sh Lewis/Benchmark
+           rsync -rvz FLAME/*.h Lewis/Benchmark
+           rsync -rvz FLAME/*.c Lewis/Benchmark
+           rsync -rvz FLAME/benchmark*.xml Lewis/Benchmark
            cd -
 }
 
 rsyncResults () {
-           cd /home/reitero/Arbeit/Uni/2017W/Praktikum1/
-           rsync -rvz Lewis/circles/Results/ Models/Circles/Results 
+           cd /home/reitero/Arbeit/Uni/MA
+           rsync -rvz Lewis/Benchmark/results/*.rds FLAME/results 
            cd -
+}
+
+relinkRBLAS() {
+   cd /usr/lib/R/lib/
+   sudo rm -f libRblas.so.backup libRlapack.so.backup
+   sudo mv libRblas.so libRblas.so.backup
+   sudo mv libRlapack.so libRlapack.so.backup
+   sudo ln -s /usr/lib/libblas.so libRblas.so
+   sudo ln -s /usr/lib/liblapack.so libRlapack.so
+   cd -
 }

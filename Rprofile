@@ -9,7 +9,7 @@ local({r <- getOption("repos")
 options(scipen = 99, digits = 3)
 options(max.print = 9999)
 options(stringsAsFactors = FALSE)
-options(width = 75)
+options(width = 65)
 options(menu.graphics=FALSE)
 
 options(devtools.name = "Oliver Reiter")

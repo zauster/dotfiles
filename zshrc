@@ -3361,9 +3361,13 @@ bindkey '^[[2~' overwrite-mode
 source ~/.bash_aliases
 source ~/.bash_func
 
-export LD_LIBRARY_PATH="/home/reitero/sfw/lib:/home/reitero/sfw/Boost/Boost_1.61/lib"
+source ~/.profile
 
-## END OF FILE #################################################################
+##
+## Environment variables are set in .profile
+##
+
+## END OF FILE ##############################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:
 # mode: sh
