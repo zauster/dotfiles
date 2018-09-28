@@ -144,56 +144,8 @@ remWIIWfixed () {
 ## UniVie Stuff
 ##
 
-## Bonnie
-mountBonnie () {
-            sshfs a0603045@bonnie.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2015W/pap/bonnie
-}
-
-sshBonnie () {
-          ssh 'a0603045@bonnie.par.univie.ac.at'
-}
-
-## Cora
-mountCora () {
-          sshfs a0603045@cora.par.univie.ac.at:/home/a0603045 /home/reitero/Arbeit/Uni/2016S/hpc/cora
-}
-
-sshCora () {
-        ssh 'a0603045@cora.par.univie.ac.at'
-}
-
-## Lewis Server. 4f3}lewis
-sshLewis () {
-          ssh -X 'a0603045@lewis.cs.univie.ac.at'
-}
-
-scpLewis () {
-         scp $1 a0603045@lewis.cs.univie.ac.at:~/
-}
-
-
-mountLewis () {
-            sshfs a0603045@lewis.cs.univie.ac.at:/home/a0603045/models/ /home/reitero/Arbeit/Uni/MA/Lewis
-}
-
 mountVSC() {
            sshfs olreit@vsc3.vsc.ac.at:/home/lv71139/olreit /home/reitero/Arbeit/Uni/MA/VSC
-}
-
-rsyncLewis () {
-           cd /home/reitero/Arbeit/Uni/MA
-           rsync -vz FLAME/*.R Lewis/Benchmark
-           # rsync -vz FLAME/*.sh Lewis/Benchmark
-           rsync -rvz FLAME/*.h Lewis/Benchmark
-           rsync -rvz FLAME/*.c Lewis/Benchmark
-           rsync -rvz FLAME/benchmark*.xml Lewis/Benchmark
-           cd -
-}
-
-rsyncResults () {
-           cd /home/reitero/Arbeit/Uni/MA
-           rsync -rvz Lewis/Benchmark/results/*.rds FLAME/results 
-           cd -
 }
 
 relinkRBLAS() {
