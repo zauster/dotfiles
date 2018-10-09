@@ -77,7 +77,7 @@ font-2 = siji:pixelsize=10;1
 
 modules-left = i3
 modules-center = 
-modules-right = mpd separator xbacklight pulseaudio chkbd memory cpu wlan eth battery temperature date separator powermenu
+modules-right = mpd separator xbacklight pulseaudio chkbd xkeyboard memory cpu wlan eth battery temperature date separator powermenu
 
 tray-position = right
 tray-padding = 2
@@ -125,11 +125,12 @@ type = internal/xkeyboard
 blacklist-0 = num lock
 
 format = <label-layout> <label-indicator>
-format-prefix = "kbd "
+; format-prefix = "kbd "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.blue500}
 
-label-layout = %name% 
+label-layout =
+;%name% 
 label-layout-underline = ${colors.blue500}
 ; label-indicator-padding = 2
 ; label-indicator-margin = 1
